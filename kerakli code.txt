@@ -1,0 +1,13 @@
+React Scripts Not Recognized as internal/external script
+step:
+	npm install react-scripts
+still not working->
+rd /s /q "node_modules"
+del package-lock.json
+del -f yarn.lock
+
+# to clean npm cache
+npm cache clean --force
+
+# to install packages
+npm install

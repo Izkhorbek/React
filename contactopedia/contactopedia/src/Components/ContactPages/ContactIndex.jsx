@@ -12,30 +12,30 @@ class ContactIndex extends React.Component {
     super(props);
 
     this.state = {
-        contactList:[
-            {
-                id:1,
-                name: "Ben Parker",
-                phone: "99890-5871-4695",
-                email: "ben@naver.com",
-                isFavorite:true,
-            },
-            {
-                id:2,
-                name: "Kathy Patrick",
-                phone: "99890-2154-1102",
-                email: "kethy@naver.com",
-                isFavorite:true,
-            },
-            {
-                id:1,
-                name: "Paul Shown",
-                phone: "99891-9987-0015",
-                email: "paul@naver.com",
-                isFavorite:false,
-            },
-        ],
-    }
+      contactList: [
+        {
+          id: 1,
+          name: "Ben Parker",
+          phone: "99890-5871-4695",
+          email: "ben@naver.com",
+          isFavorite: true,
+        },
+        {
+          id: 2,
+          name: "Kathy Patrick",
+          phone: "99890-2154-1102",
+          email: "kethy@naver.com",
+          isFavorite: true,
+        },
+        {
+          id: 1,
+          name: "Paul Shown",
+          phone: "99891-9987-0015",
+          email: "paul@naver.com",
+          isFavorite: false,
+        },
+      ],
+    };
   }
 
   render() {
@@ -51,17 +51,27 @@ class ContactIndex extends React.Component {
               <RemoveAllContact />
             </div>
             <div className="row py-2">
-              <AddContact />
+              <div className="col-8 offset-2 row">
+                <AddContact />
+              </div>
             </div>
             <div className="row py-2">
-              <FavoriteContacts contacts ={this.state.contactList.filter((item)=>
-                item.isFavorite ==true
-              )}/>
+              <div className="col-8 offset-2 row">
+                <FavoriteContacts
+                  contacts={this.state.contactList.filter(
+                    (item) => item.isFavorite == true
+                  )}
+                />
+              </div>
             </div>
             <div className="row py-2">
-              <GeneralContacts contacts = {this.state.contactList.filter((item)=>
-                    item.isFavorite ==false
-                )}/>
+              <div className="col-8 offset-2 row">
+                <GeneralContacts
+                  contacts={this.state.contactList.filter(
+                    (item) => item.isFavorite == false
+                  )}
+                />
+              </div>
             </div>
           </div>
           <div>

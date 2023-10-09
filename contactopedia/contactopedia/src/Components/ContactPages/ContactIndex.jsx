@@ -38,7 +38,8 @@ class ContactIndex extends React.Component {
       selectedContact: undefined,
       isUpdating: false,
     };
-  }
+  };
+
   handleAddContact = (newContact) => {
     if (newContact.name === "") {
       return { status: "failure", msg: "Please Enter a valid Name" };
@@ -86,7 +87,7 @@ class ContactIndex extends React.Component {
     this.setState((item) => {
       return {
         contactList: item.contactList.filter((obj) => {
-          return obj.id != contactId ;
+          return obj.id != contactId;
         }),
       };
     });
@@ -118,14 +119,64 @@ class ContactIndex extends React.Component {
   };
 
   handleUpdateClick = (contact) => {
-    console.log(contact);
-    this.setState((contact) => {
+    this.setState((prevState) => {
       return {
         selectedContact: contact,
-        isUpdating:true,
+        isUpdating: true,
       };
     });
   };
+
+  handleCancelUpdateContact = (contact) => {
+    console.log(contact);
+    this.setState((prevState) => {
+      return {
+        selectedContact: undefined,
+        isUpdating: false,
+      };
+    });
+  };
+
+  handleUpdateContact = (updatedContact) => {
+    console.log(updatedContact);
+    if (updatedContact.name == "") {
+      return { status: "failure", msg: "Please Enter a valid Name" };
+    } else if (updatedContact.phone == "") {
+      return { status: "failure", msg: "Please Enter a valid Phone Number" };
+    }
+    const duplicateRecord = this.state.contactList.filter((x) => {
+      if (x.id == updatedContact.name && x.phone == updatedContact.phone) {
+        return true;
+      }
+    });
+
+    if (duplicateRecord.length > 0) {
+      return { status: "failure", msg: "Duplicate Record" };
+    } else {
+      
+      
+      this.setState((prevState) => {
+        return {
+          contactList: prevState.contactList.map((item)=>{
+              if(item.id==updatedContact.id)
+              {
+                return {
+                  ...item,
+                  name: updatedContact.name,
+                  email: updatedContact.email,
+                  phone:updatedContact.phone  
+                };
+              }
+              return item;
+          }),
+          isUpdating :false,
+          selectedContact: undefined
+        };
+      });
+      return { status: "success", msg: "Contact was Updated successfully" };
+    }
+  };
+
 
   render() {
     return (
@@ -145,7 +196,13 @@ class ContactIndex extends React.Component {
             </div>
             <div className="row py-2">
               <div className="col-8 offset-2 row">
-                <AddContact handleAddContact={this.handleAddContact} />
+                <AddContact
+                  handleAddContact={this.handleAddContact}
+                  isUpdating={this.state.isUpdating}
+                  selectedContact={this.state.selectedContact}
+                  cancelUpdateContact = {this.handleCancelUpdateContact}
+                  handleUpdateContact = {this.handleUpdateContact}
+                />
               </div>
             </div>
             <div className="row py-2">

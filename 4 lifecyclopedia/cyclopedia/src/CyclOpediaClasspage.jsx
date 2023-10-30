@@ -68,6 +68,7 @@ class CyclOpediaClassPage extends React.Component {
   handleAddStudent = () => {
     this.setState((prevState) => {
       return {
+        ...prevState,
         studentCount: prevState.studentCount + 1,
       };
     });
@@ -101,7 +102,7 @@ class CyclOpediaClassPage extends React.Component {
             } btn btn-success btn-sm`}
           ></i>
         </div>
-        {!this.state.hideInstructor && this.state.hideInstructor ? (
+        {!this.state.hideInstructor && this.state.instructor ? (
           <Instructor instructor={this.state.instructor} />
         ) : null}
 

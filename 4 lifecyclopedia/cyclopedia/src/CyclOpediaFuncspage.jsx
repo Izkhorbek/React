@@ -1,69 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { getRandomUser } from "./Utility/api";
 import Instructor from "./InstructorFunc";
 
 const CyclOpediaFuncPage = () => {
-  // constructor(prop) {
-  //   super(prop);
-  //    state = JSON.parse(localStorage.getItem("Cyclopedia")) || {
-  //     instructor: undefined,
-  //     studentList: [],
-  //     studentCount: 0,
-  //     hideInstructor: false,
-  //     inputName: "",
-  //     inputFeedback: "",
-  //   };
-  // }
-
-  // componentDidMount = async () => {
-  //   console.log("Component DidMount");
-  //   if (JSON.parse(localStorage.getItem("Cyclopedia"))) {
-  //     // setState(JSON.parse(localStorage.getItem("Cyclopedia")));
-  //   } else {
-  //     const response = await getRandomUser();
-  //      setState((prevState) => {
-  //       return {
-  //         instructor: {
-  //           name: response.data.first_name + " " + response.data.last_name,
-  //           email: response.data.email,
-  //           phone: response.data.phone_number,
-  //         },
-  //       };
-  //     });
-  //   }
-  // };
-
-  // componentDidUpdate = async (previousProps, previousState) => {
-  //   console.log("Component DidUpdate");
-  //   localStorage.setItem("Cyclopedia", JSON.stringify( state));
-  //   console.log("Old State - " + previousState.studentCount);
-  //   console.log("New State - " +  state.studentCount);
-
-  //   if (previousState.studentCount <  state.studentCount) {
-  //     const response = await getRandomUser();
-
-  //      setState((prevState) => {
-  //       return {
-  //         studentList: [
-  //           ...prevState.studentList,
-  //           {
-  //             name: response.data.first_name + " " + response.data.last,
-  //           },
-  //         ],
-  //       };
-  //     });
-  //   } else if (previousState.studentCount >  state.studentCount) {
-  //      setState((prevState) => {
-  //       return {
-  //         studentList: [],
-  //       };
-  //     });
-  //   }
-  // };
-
-  // componentWillUnmount() {
-  //   console.log("Component WillUnmount");
-  // }
   const [state, setState] = useState(() => {
     return {
       instructor: undefined,
@@ -84,13 +23,23 @@ const CyclOpediaFuncPage = () => {
       inputFeedback: "",
     };
   });
+
+  const totalRender = useRef(0);
+  const prevStudentCount = useRef(0);
+  const inputFeedbackRef = useRef(null);
+  const inputId = useId("");
+
   useEffect(() => {
-    console.log("this will be called on every render");
-    console.log(state.studentList.length);
+    totalRender.current = totalRender.current + 1;
+    console.log("Render" + totalRender.current);
   });
 
   useEffect(() => {
-    console.log("this will be called on Initial/first render / MOUNT");
+    inputFeedbackRef.current.focus();
+    return () => {};
+  }, []);
+
+  useEffect(() => {
     const getUser = async () => {
       const response = await getRandomUser();
       setState((prevState) => {
@@ -105,49 +54,42 @@ const CyclOpediaFuncPage = () => {
         };
       });
     };
-    if (state.studentList.length < state.studentCount) {
+    if (prevStudentCount.current < state.studentCount) {
       getUser();
-    } else if(state.studentList.length > state.studentCount){
+    } else if (prevStudentCount.current > state.studentCount) {
       setState((prevState) => {
         return {
           ...prevState,
           studentList: [],
         };
       });
-    };
+    }
   }, [state.studentCount]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "This will be called on whenever value of hideInstructor changes"
-  //   );
-
-  //   const getUser = async () => {
-  //     const response = await getRandomUser();
-  //     setState((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         instructor: {
-  //           name: response.data.first_name + " " + response.data.last_name,
-  //           email: response.data.email,
-  //           phone: response.data.phone_number,
-  //         },
-  //       };
-  //     });
-  //   };
-  //   if (state.hideInstructor) {
-  //     getUser();
-  //   }
-  // }, [inputName, inputFeedback, state.hideInstructor]);
+  useEffect(() => {
+    prevStudentCount.current = state.studentCount;
+  }, [state.studentCount]);
 
   useEffect(() => {
     console.log("this will be called on Initial/first render / Mount");
+    const getUser = async () => {
+      const response = await getRandomUser();
+      setState((prevState) => {
+        return {
+          ...prevState,
+          instructor: {
+            name: response.data.first_name + " " + response.data.last_name,
+            email: response.data.email,
+            phone: response.data.phone,
+          },
+        };
+      });
+    };
+    getUser();
     return () => {
       console.log("this will be called on when component will be UNMOUNT");
     };
-  }, []);
-
-  // inputFeedback: "",
+  }, [state.hideInstructor]);
 
   const handleAddStudent = () => {
     setState((prevState) => {
@@ -177,8 +119,8 @@ const CyclOpediaFuncPage = () => {
   };
 
   return (
-    <div>
-      <div className="p-3">
+    <div className="border">
+      <div className="p-3 ">
         <span className="h4 text-success"> Instructor </span>
         <i
           onClick={handleToggleChange}
@@ -201,19 +143,25 @@ const CyclOpediaFuncPage = () => {
           onChange={(e) => {
             setInputNameState({ inputName: e.target.value });
           }}
+          id={`${inputId} name`}
         ></input>{" "}
+        <label for={`${inputId} name`}>Value : </label>{inputName.inputName}
         <br />
         <textarea
           placeholder="Feedback..."
           value={inputFeedback.inputFeedback}
+          ref={inputFeedbackRef}
           onChange={(text) => {
             setInputFeedbackState({ inputFeedback: text.target.value });
           }}
+          id={`${inputId} feedback`}
         ></textarea>
+        <label for={`${inputId} feedback`}>Feedback Value :</label>
       </div>
       <div className="p-3">
         <span className="h4 text-success">Student</span>
         <div> Student Count: {state.studentCount}</div>
+        <div> Total render: {totalRender.current}</div>
         <button className="btn btn-success btn-sm" onClick={handleAddStudent}>
           Add Student
         </button>
@@ -224,11 +172,13 @@ const CyclOpediaFuncPage = () => {
         >
           Remove Students
         </button>
-          {
-           
-          
-          }
-        }
+        {state.studentList.map((student, index) => {
+          return (
+            <div className="border text-white text-center" key={index}>
+              -{student.name}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

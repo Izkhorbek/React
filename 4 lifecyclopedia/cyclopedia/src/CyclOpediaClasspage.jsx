@@ -53,11 +53,11 @@ class CyclOpediaClassPage extends React.Component {
         };
       });
     } else if (previousState.studentCount > this.state.studentCount) {
-        this.setState((prevState) => {
-            return {
-              studentList: [],
-            };
-          });
+      this.setState((prevState) => {
+        return {
+          studentList: [],
+        };
+      });
     }
   };
 
@@ -143,10 +143,11 @@ class CyclOpediaClassPage extends React.Component {
             Remove Students
           </button>
           {this.state.studentList.map((student, index) => {
+            return(
             <div className="text-white" key={index}>
-              {" "}
-              - {student}
-            </div>;
+              - {student.name}
+            </div>
+          );
           })}
         </div>
       </div>

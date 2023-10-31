@@ -7,17 +7,6 @@ const InstructorFunc = (props) => {
       console.log("useEffect WillUnMount");
     };
   },[]);
-
-  // componentDidUpdate = async () => {
-  //   console.log("DidUpdate - Instructor");
-  // };
-  // componentDidMount = async () => {
-  //   console.log("DidMount - Instructor");
-  // };
-
-  // componentWillUnmount() {
-  //   console.log("WillUnmount - Instructor");
-  // }
   return (
     <div className="p-3">
       Name: {props.instructor.name}

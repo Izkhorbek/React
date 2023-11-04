@@ -18,15 +18,24 @@ root.render(
       <Header />
 
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/product" element={<Product />}></Route>
-        <Route path="/productlist" element={<ProductList />}></Route>
-        <Route path="/createproduct" element={<CreateProduct />}></Route>
-        <Route path="/productdetails" element={<ProductDetails />}></Route>
+        <Route path="" element={<Home />}></Route>
+        <Route path="about" element={<About />}></Route>
+        <Route path="product">
+          <Route path="" element={<Product />}></Route>
+          <Route path="list" element={<ProductList />}></Route>
+          <Route path="create" element={<CreateProduct />}></Route>
+          <Route path="details" element={<ProductDetails />}>
+            <Route path=":productId"></Route>
+          </Route>
+        </Route>
+        <Route path="cryptodetail" element={<CryptoDetail />}>
+          <Route path=":cryptoSymbol" element={<CryptoDetail />}>
+            <Route path=":id" element={<CryptoDetail />}></Route>
+          </Route>
+        </Route>
 
-        <Route path="/cryptodetail" element={<CryptoDetail />}></Route>
         <Route path="/notfound" element={<NotFound />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

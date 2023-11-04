@@ -1,7 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ProductList() {
-  return <div>ProductList</div>;
+  const navigate = useNavigate();
+  return (
+    <div>
+      ProductList
+      <button
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        Go Back
+      </button>
+    </div>
+  );
 }
 
 export default ProductList;

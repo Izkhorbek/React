@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../src/images/react.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <div>
@@ -25,23 +25,39 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active text-danger" : "nav-link"
+                  }
+                  aria-current="page"
+                  to="/"
+                >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active text-danger" : "nav-link"
+                  }
+                  to="/about"
+                >
                   About
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/cryptodetail">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active text-danger" : "nav-link"
+                  }
+                  to="/cryptodetail/mk/35"
+                >
                   Crypto Detail
-                </Link>
+                </NavLink>
               </li>
 
               <li className="nav-item dropdown">
-                <Link
+                <NavLink
                   className="nav-link dropdown-toggle"
                   to="/"
                   role="button"
@@ -49,34 +65,34 @@ const Header = () => {
                   aria-expanded="false"
                 >
                   Product
-                </Link>
+                </NavLink>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to="/product">
+                    <NavLink className="dropdown-item" to="/product">
                       Product
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/productlist">
+                    <NavLink className="dropdown-item" to="/product/list">
                       Product List
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/createproduct">
+                    <NavLink className="dropdown-item" to="/product/create">
                       Create Product
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/productdetails">
+                    <NavLink className="dropdown-item" to="/product/details">
                       Product Details
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </li>
               <li className="nav-item">
-                <Link className="nav-link disabled" aria-disabled="true">
+                <NavLink className="nav-link disabled" aria-disabled="true">
                   Disabled
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </div>

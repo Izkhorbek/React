@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { resetReduxOpedia } from "../actions/actions";
 const initialState = { countSlice: 20 };
 
 export const counterSlice = createSlice({
@@ -19,17 +19,14 @@ export const counterSlice = createSlice({
     decrementMult: (state, action) => {
       state.countSlice -= action.payload;
     },
-    resetCount: (state) => {
-      state.countSlice = 20;
+  },
+  extraReducers: {
+    [resetReduxOpedia]: (state, action) => {
+      state.countSlice = 10;
     },
   },
 });
 
-export const {
-  increment,
-  decrement,
-  incrementMult,
-  decrementMult,
-  resetCount,
-} = counterSlice.actions;
+export const { increment, decrement, incrementMult, decrementMult } =
+  counterSlice.actions;
 export const counterReducer = counterSlice.reducer;

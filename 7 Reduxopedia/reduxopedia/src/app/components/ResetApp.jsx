@@ -1,12 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { resetDestination } from "../../redux/slice/destinationSlice";
-import { resetCount } from "../../redux/slice/counterSlice";
+
+import { resetReduxOpedia } from "../../redux/actions/actions";
 function ResetApp() {
   const dispatch = useDispatch();
   const reset = () => {
-    dispatch(resetDestination());
-    dispatch(resetCount());
+    dispatch(resetReduxOpedia());
   };
 
   return (

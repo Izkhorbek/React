@@ -7,10 +7,10 @@ function Destination({ destination }) {
   const [editCity, setEditCity] = useState("");
   const [editCountry, setEditCountry] = useState("");
 
-  const handleEditChange = function (currDestination) {
+  const handleEditChange = function () {
     setEditState(!edit);
-    setEditCity(currDestination.city);
-    setEditCountry(currDestination.country);
+    setEditCity(destination.city);
+    setEditCountry(destination.country);
   };
 
   const [deleteDestination] = useDeleteOneDestinationMutation();
@@ -27,13 +27,13 @@ function Destination({ destination }) {
               <input
                 type="text"
                 className="col-4"
-                value={editCity}
+                defaultValue={editCity}
                 onChange={(e) => setEditCity(e.target.value)}
               ></input>
               <input
                 type="text"
                 className="col-4 offset-4"
-                value={editCountry}
+                defaultValue={editCountry}
                 onChange={(e) => setEditCountry(e.target.value)}
               ></input>
             </div>
@@ -51,7 +51,7 @@ function Destination({ destination }) {
         <div className="col-1 ">
           <button
             className="btn btn-warning form-control"
-            onClick={() => handleEditChange(destination)}
+            onClick={() => handleEditChange()}
           >
             {edit ? "Cancel" : "Edit"}
           </button>

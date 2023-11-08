@@ -1,17 +1,19 @@
+import { NavLink } from "react-router-dom";
+
 let logo = require("../../Assets/Images/Taomlar.png");
 
 function Header() {
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#section">
+        <NavLink className="nav-link" aria-current="page" to="/">
           <img
             src={logo}
             alt=""
             className=""
             style={{ height: "40px", verticalAlign: "top" }}
           />
-        </a>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -26,35 +28,44 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="#section">
+              <NavLink className="nav-link" aria-current="page" to="/">
                 Home
-              </a>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                aria-current="page"
+                to="/shoppingCard"
+              >
+                <i className="bi bi-cart3"></i>
+              </NavLink>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <NavLink
                 className="nav-link dropdown-toggle"
-                href="#section"
+                to="#section"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Admin Panel
-              </a>
+              </NavLink>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item" href="#section">
+                  <NavLink className="dropdown-item" to="#section">
                     Action
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#section">
+                  <NavLink className="dropdown-item" to="#section">
                     Another action
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#section">
+                  <NavLink className="dropdown-item" to="#section">
                     Something else here
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </li>

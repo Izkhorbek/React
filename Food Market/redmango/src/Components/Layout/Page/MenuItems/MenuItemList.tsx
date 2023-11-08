@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { menuItemModel } from "../../../../Interface";
 import { request } from "http";
+import MenuItemCard from "./MenuItemCard";
 let mainView = require("../../../../Assets/Images/mainView.jpg");
 
 function MenuItemList() {
@@ -15,20 +16,11 @@ function MenuItemList() {
       });
   }, []);
   return (
-    <div>
-      <div className="card" style={{ width: "18rem" }}>
-        <img src={mainView} alt="" className="img-fluid"></img>
-        <div className="card-body">
-          <h5 className="card-title">Card title</h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#section" className="btn btn-primary">
-            Go somewhere
-          </a>
-        </div>
-      </div>
+    <div className="row">
+      {menuItems.length > 0 &&
+        menuItems.map((menuItem, index) => (
+          <MenuItemCard menuItem={menuItem} key={index} />
+        ))}
     </div>
   );
 }

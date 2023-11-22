@@ -1,15 +1,31 @@
-import { NavLink } from "react-router-dom";
-import { cardItemModel } from "../../Interface";
+import { NavLink, useNavigate } from "react-router-dom";
+import { cardItemModel, userModel } from "../../Interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
-
+import { useDispatch } from "react-redux";
+import {
+  emptyUserState,
+  setLoggedInUser,
+} from "../../Storage/Redux/userAuthSlice";
 let logo = require("../../Assets/Images/Taomlar.png");
 
 function Header() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const shoppingCartFromStore: cardItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cardItems ?? []
   );
 
+  const userLogged: userModel = useSelector(
+    (state: RootState) => state.userAuthStore ?? null
+  );
+
+  const handleLogut = () => {
+    localStorage.removeItem("token");
+    dispatch(setLoggedInUser({ ...emptyUserState }));
+    navigate("/");
+  };
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
       <div className="container-fluid">
@@ -80,33 +96,54 @@ function Header() {
               </ul>
             </li>
             <div className="d-flex" style={{ marginLeft: "auto" }}>
-              <li className="nav-item">
-                <button
-                  className="btn btn-success btn-outlined rounded-pill text-white mx-2"
-                  style={{ border: "none", height: "40px", width: "100px" }}
-                >
-                  Logout
-                </button>
-              </li>
-              <li className="nav-item text-white">
-                <NavLink
-                  className="nav-link"
-                  aria-current="page"
-                  to="/register"
-                >
-                  Register
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="btn btn-success btn-outlined rounded-pill text-white mx-2"
-                  style={{ border: "none", height: "40px", width: "100px" }}
-                  aria-current="page"
-                  to="/login"
-                >
-                  Login
-                </NavLink>
-              </li>
+              {userLogged.id && (
+                <>
+                  <li className="nav-item">
+                    <button
+                      className="nav-link active"
+                      style={{
+                        cursor: "pointer",
+                        background: "transparent",
+                        border: 0,
+                      }}
+                    >
+                      Welcome, {userLogged.fullName}
+                    </button>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className="btn btn-success btn-outlined rounded-pill text-white mx-2"
+                      style={{ border: "none", height: "40px", width: "100px" }}
+                      onClick={handleLogut}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              )}
+              {!userLogged.id && (
+                <>
+                  <li className="nav-item text-white">
+                    <NavLink
+                      className="nav-link"
+                      aria-current="page"
+                      to="/register"
+                    >
+                      Register
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="btn btn-success btn-outlined rounded-pill text-white mx-2"
+                      style={{ border: "none", height: "40px", width: "100px" }}
+                      aria-current="page"
+                      to="/login"
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </div>
           </ul>
         </div>

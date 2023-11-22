@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useGetShoppingCartQuery } from "../Apis/shoppingCartApi";
 import { setShoppingCart } from "../Storage/Redux/shoppingCartSlice";
+import { jwtDecode } from "jwt-decode";
+import { setLoggedInUser } from "../Storage/Redux/userAuthSlice";
+import { userModel } from "../Interface";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +29,13 @@ function App() {
     }
   }, [data]);
 
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) {
+      const { fullName, id, email, role }: userModel = jwtDecode(localToken);
+      dispatch(setLoggedInUser({ fullName, id, email, role }));
+    }
+  }, []);
   return (
     <div className="text-success">
       <Header />

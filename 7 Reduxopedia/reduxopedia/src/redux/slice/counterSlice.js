@@ -19,14 +19,27 @@ export const counterSlice = createSlice({
     decrementMult: (state, action) => {
       state.countSlice -= action.payload;
     },
+<<<<<<< Updated upstream
   },
   extraReducers: {
     [resetReduxOpedia]: (state, action) => {
       state.countSlice = 10;
     },
+=======
+    // resetCount: (state) => {
+    //   state.countSlice = 20;
+    // },
+  },
+  extraReducers: (builder) => {
+    builder.addCase("destination/resetDestination", (state, actions) => {
+      state.countSlice = 20;
+      console.log("resetCount");
+    });
+>>>>>>> Stashed changes
   },
 });
 
 export const { increment, decrement, incrementMult, decrementMult } =
   counterSlice.actions;
 export const counterReducer = counterSlice.reducer;
+console.log(counterSlice);

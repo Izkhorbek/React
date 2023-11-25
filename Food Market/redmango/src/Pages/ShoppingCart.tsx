@@ -1,5 +1,6 @@
 import React from "react";
 import { CartPickupDetails, CartSummary } from "../Components/Cart";
+import { WithAuth } from "../HOC";
 
 function ShoppingCart() {
   return (
@@ -14,4 +15,4 @@ function ShoppingCart() {
   );
 }
 
-export default ShoppingCart;
+export default WithAuth(ShoppingCart);

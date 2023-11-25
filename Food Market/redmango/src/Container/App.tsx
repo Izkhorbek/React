@@ -1,6 +1,9 @@
 import React from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
+  AccessDenied,
+  AuthenticationAdmin,
+  AuthorizationCustom,
   Home,
   Login,
   MenuItemDetails,
@@ -49,6 +52,15 @@ function App() {
           <Route path="/shoppingCart" element={<ShoppingCart />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/authentication"
+            element={<AuthenticationAdmin />}
+          ></Route>
+          <Route
+            path="/authorization"
+            element={<AuthorizationCustom />}
+          ></Route>
+          <Route path="/accessDenied" element={<AccessDenied />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

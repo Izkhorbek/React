@@ -11,7 +11,7 @@ const authApi = createApi({
         url: "auth/register",
         method: "POST",
         headers: {
-          "Content-type:": "application/json",
+          "Content-Type": "application/json",
         },
         body: userData,
       }),
@@ -21,7 +21,7 @@ const authApi = createApi({
         url: "auth/login",
         method: "POST",
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
         body: userCredentials,
       }),

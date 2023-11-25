@@ -20,7 +20,7 @@ function MenuItemList() {
     return <MainLoader />;
   }
   return (
-    <div className="row">
+    <div className="row container offset-2">
       {data.result.length > 0 &&
         data.result.map((menuItem: menuItemModel, index: number) => (
           <MenuItemCard menuItem={menuItem} key={index} />

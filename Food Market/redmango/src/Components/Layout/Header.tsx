@@ -62,27 +62,7 @@ function Header() {
                 to="/shoppingCart"
               >
                 <i className="bi bi-cart3"></i>{" "}
-                {shoppingCartFromStore?.length
-                  ? `(${shoppingCartFromStore.length})`
-                  : ""}
-              </NavLink>
-            </li>
-            <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link"
-                aria-current="page"
-                to="/authentication"
-              >
-                Authentication
-              </NavLink>
-            </li>
-            <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link"
-                aria-current="page"
-                to="/authorization"
-              >
-                Authorization
+                {userLogged.id && `(${shoppingCartFromStore.length})`}
               </NavLink>
             </li>
             <li className="nav-item dropdown">

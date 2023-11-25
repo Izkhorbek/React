@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cardItemModel } from "../../Interface";
+import { cardItemModel, userModel } from "../../Interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { useUpdateShoppingCartMutation } from "../../Apis/shoppingCartApi";
@@ -7,6 +7,9 @@ import { useUpdateShoppingCartMutation } from "../../Apis/shoppingCartApi";
 function CartSummary() {
   const shoppingCartFromStore: cardItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cardItems ?? []
+  );
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
   );
   const [updateShoppingCart] = useUpdateShoppingCartMutation();
   const [isAddingtoCart, setIsAddingtoCartState] = useState(false);
@@ -16,7 +19,7 @@ function CartSummary() {
     await updateShoppingCart({
       menuItemId: menuItemId,
       updateQuantityBy: quantity,
-      userId: "f9d964e8-bff1-4851-92b7-389c8415d4ff",
+      userId: userData.id,
     });
 
     setIsAddingtoCartState(false);

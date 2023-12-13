@@ -7,6 +7,7 @@ import {
   emptyUserState,
   setLoggedInUser,
 } from "../../Storage/Redux/userAuthSlice";
+import { SD_Rules } from "../../Utility/SD";
 let logo = require("../../Assets/Images/Taomlar.png");
 
 function Header() {
@@ -55,6 +56,50 @@ function Header() {
                 Home
               </NavLink>
             </li>
+
+            {userLogged.role === SD_Rules.ADMIN ? (
+              <li className="nav-item dropdown">
+                <NavLink
+                  className="nav-link dropdown-toggle"
+                  to="#section"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Admin Panel
+                </NavLink>
+                <ul className="dropdown-menu" style={{ cursor: "pointer" }}>
+                  <li
+                    className="dropdown-item"
+                    onClick={() => navigate("/order/myorders")}
+                  >
+                    My Orders
+                  </li>
+                  <li
+                    className="dropdown-item"
+                    onClick={() => navigate("/order/allorders")}
+                  >
+                    All Orders
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#section">
+                      Something else here
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  aria-current="page"
+                  to="/order/myorders"
+                >
+                  Orders
+                </NavLink>
+              </li>
+            )}
+
             <li className="nav-item">
               <NavLink
                 className="nav-link"
@@ -64,34 +109,6 @@ function Header() {
                 <i className="bi bi-cart3"></i>{" "}
                 {userLogged.id && `(${shoppingCartFromStore.length})`}
               </NavLink>
-            </li>
-            <li className="nav-item dropdown">
-              <NavLink
-                className="nav-link dropdown-toggle"
-                to="#section"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Admin Panel
-              </NavLink>
-              <ul className="dropdown-menu">
-                <li>
-                  <NavLink className="dropdown-item" to="#section">
-                    Action
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="#section">
-                    Another action
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink className="dropdown-item" to="#section">
-                    Something else here
-                  </NavLink>
-                </li>
-              </ul>
             </li>
             <div className="d-flex" style={{ marginLeft: "auto" }}>
               {userLogged.id && (

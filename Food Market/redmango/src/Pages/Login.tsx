@@ -35,7 +35,6 @@ function Login() {
     });
 
     if (response.data) {
-      console.log(response.data);
       setErrorMessage("");
       const { token } = response.data.result;
       localStorage.setItem("token", token);
@@ -43,7 +42,6 @@ function Login() {
       dispatch(setLoggedInUser({ fullName, id, email, role }));
       navigate("/");
     } else if (response.error) {
-      console.log(response.error.data.errorMessages[0]);
       setErrorMessage(response.error.data.errorMessages[0]);
     }
     setLoading(false);

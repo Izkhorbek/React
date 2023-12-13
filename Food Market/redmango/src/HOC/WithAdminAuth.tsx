@@ -8,7 +8,6 @@ const WithAdminAuth = (WrappedComponnet: any) => {
     if (accessToken) {
       const decode: {
         role: string;
-        s;
       } = jwtDecode(accessToken);
 
       if (decode.role !== SD_Rules.ADMIN) {

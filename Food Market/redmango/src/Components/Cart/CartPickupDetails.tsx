@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { cardItemModel, userModel } from "../../Interface";
+import { apiResponse, cardItemModel, userModel } from "../../Interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
 import { inputHelper } from "../../Helper";
 import { MiniLoader } from "../Layout/Page/Common";
+import { useNavigate } from "react-router-dom";
+import { useInitialPaymentMutation } from "../../Apis/paymentApi";
 
 function CartPickupDetails() {
   const [isLoading, setIsLoading] = useState(false);
+  const [initialPayment] = useInitialPaymentMutation();
+  const navigate = useNavigate();
+  const userData: userModel = useSelector(
+    (state: RootState) => state.userAuthStore
+  );
 
   const shoppingCartFromStore: cardItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cardItems ?? []
-  );
-
-  const userData: userModel = useSelector(
-    (state: RootState) => state.userAuthStore
   );
 
   let grandTotal = 0;
@@ -36,7 +39,14 @@ function CartPickupDetails() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    const { data }: apiResponse = await initialPayment(userData.id);
+    navigate("/payment", {
+      state: { apiResult: data?.result, userInput },
+    });
+
+    setIsLoading(false);
   };
+
   shoppingCartFromStore?.map((item: cardItemModel) => {
     grandTotal += item.menuItem?.price! * (item.quantity ?? 0);
     numberOfItems += item.quantity ?? 0;

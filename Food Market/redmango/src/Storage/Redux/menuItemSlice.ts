@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { menuItem: [] };
-
+const initialState = { menuItem: [], search: "" };
 const menuItemSlice = createSlice({
   name: "menuItem",
   initialState: initialState,
@@ -9,8 +8,11 @@ const menuItemSlice = createSlice({
     setMenuItem: (state, action) => {
       state.menuItem = action.payload;
     },
+    setSearchItem: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 
-export const { setMenuItem } = menuItemSlice.actions;
+export const { setMenuItem, setSearchItem } = menuItemSlice.actions;
 export const menuItemReducer = menuItemSlice.reducer;

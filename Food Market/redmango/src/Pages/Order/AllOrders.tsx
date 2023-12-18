@@ -1,14 +1,11 @@
 import React from "react";
-import { WithAuth } from "../../HOC";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { RootState } from "../../Storage/Redux/store";
+import { WithAdminAuth } from "../../HOC";
 import { useGetAllOrdersQuery } from "../../Apis/orderApi";
 import { OrderList } from "../../Components/Layout/Page/Order";
 import { MainLoader } from "../../Components/Layout/Page/Common";
 
-function MyOrders() {
-  const userId = useSelector((state: RootState) => state.userAuthStore.id);
-  const { data, isLoading } = useGetAllOrdersQuery(userId);
+function AllOrders() {
+  const { data, isLoading } = useGetAllOrdersQuery("");
 
   return (
     <>
@@ -20,4 +17,4 @@ function MyOrders() {
   );
 }
 
-export default WithAuth(MyOrders);
+export default WithAdminAuth(AllOrders);

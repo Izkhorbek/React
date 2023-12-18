@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiResponse, cardItemModel, userModel } from "../../Interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Storage/Redux/store";
@@ -29,6 +29,13 @@ function CartPickupDetails() {
   };
 
   const [userInput, setUserInput] = useState(() => initialUserData);
+  useEffect(() => {
+    setUserInput({
+      name: userData.fullName,
+      email: userData.email,
+      phoneNumber: "",
+    });
+  }, [userData]);
 
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const tempData = inputHelper(e, userInput);

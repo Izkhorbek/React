@@ -4,6 +4,6 @@ export default interface menuItemModel {
   description: string;
   specialTag: string;
   category: string;
-  price?: number;
+  price: number;
   image: string;
 }

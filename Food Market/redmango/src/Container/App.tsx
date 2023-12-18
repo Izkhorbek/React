@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Footer, Header } from "../Components/Layout";
 import {
   AccessDenied,
+  AllOrders,
   AuthenticationAdmin,
   AuthorizationCustom,
   Home,
   Login,
   MenuItemDetails,
+  MenuItemList,
+  MenuItemUpsert,
   MyOrders,
   NotFound,
   OrderConfirmed,
@@ -27,16 +30,13 @@ import { RootState } from "../Storage/Redux/store";
 
 function App() {
   const dispatch = useDispatch();
-  const userData: userModel = useSelector(
-    (state: RootState) => state.userAuthStore
+  const [skip, setSkip] = useState(true);
+  const userId: string = useSelector(
+    (state: RootState) => state.userAuthStore.id
   );
-  const { data, isLoading } = useGetShoppingCartQuery(userData.id);
-
-  useEffect(() => {
-    if (!isLoading) {
-      dispatch(setShoppingCart(data.result?.cartItems));
-    }
-  }, [data]);
+ const { data, isLoading } = useGetShoppingCartQuery(userId, {
+    skip: skip,
+  }); 
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");
@@ -45,6 +45,16 @@ function App() {
       dispatch(setLoggedInUser({ fullName, id, email, role }));
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      dispatch(setShoppingCart(data.result?.cartItems));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (userId) setSkip(false);
+  }, [userId]);
   return (
     <div className="text-success">
       <Header />
@@ -63,7 +73,21 @@ function App() {
             path="/order/orderconfirmed/:id"
             element={<OrderConfirmed />}
           ></Route>
+          <Route
+            path="/menuitem/menuitemlist"
+            element={<MenuItemList />}
+          ></Route>
+
           <Route path="/order/myorders" element={<MyOrders />}></Route>
+          <Route path="/order/allorders" element={<AllOrders />}></Route>
+          <Route
+            path="/menuitem/menuitemupsert"
+            element={<MenuItemUpsert />}
+          ></Route>
+          <Route
+            path="/menuitem/menuitemupsert/:menuItemId"
+            element={<MenuItemUpsert />}
+          ></Route>
           <Route
             path="/order/orderdetails/:id"
             element={<OrderDetails />}

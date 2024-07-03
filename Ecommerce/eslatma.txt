@@ -1,0 +1,8 @@
+Banner: 
+    tracking-wide leading-5
+Subscribe: 
+    backdrop-blur-sm
+    !text-center
+Popup: 
+    backdrop-blue-sm
+    h-screen w-screen and h-full w-full difference
